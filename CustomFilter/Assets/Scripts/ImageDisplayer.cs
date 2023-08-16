@@ -55,6 +55,8 @@ public class ImageDisplayer : MonoBehaviour
             tex.LoadImage(theByteArray);
             tex.Apply();
             thePicture = tex;
+            transform.GetChild(3).GetChild(0).GetComponent<Text>().text=
+            _ButcherDirectory(arrayAdjustThisThingOrBased[0]);
         }
         if (thePictureSelected)
         {
@@ -90,5 +92,26 @@ public class ImageDisplayer : MonoBehaviour
             transform.GetChild(1).GetChild(0).GetComponent<Text>().text = "";
             transform.GetChild(1).GetChild(1).GetComponent<Text>().text = "";
         }
+    }
+    string _ButcherDirectory(string theDirectoryToButcher)
+    {
+        string theDirectoryNameTextProxy = theDirectoryToButcher;
+        char someChar = '/';
+        char anotherChar = '\\';
+        string theRemainingCharacters = "";
+        char[] theCharArray = theDirectoryNameTextProxy.ToCharArray();
+        bool ceaseTheWhile = false;
+        int i = theDirectoryNameTextProxy.Length - 1;
+        while (i >= 0 && !ceaseTheWhile)
+        {
+            theRemainingCharacters = theDirectoryNameTextProxy.Remove(0, i + 1);
+            if (theCharArray[i] == someChar || theCharArray[i] == anotherChar)
+            {
+                ceaseTheWhile = true;
+            }
+            --i;
+        }
+        theRemainingCharacters = theRemainingCharacters.Remove(theRemainingCharacters.Length - 4, 4);
+        return theRemainingCharacters;
     }
 }
